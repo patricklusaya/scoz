@@ -1,0 +1,227 @@
+import React, { Component } from 'react'
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList , TouchableOpacity, Image } from 'react-native';
+import { fetchMatchesByDate } from '../services/matchesServices';
+import { useState, useEffect } from "react";
+import CustomLoader from './loaders/CustomLoader';
+export default function Tomorrow() {
+  const [matches, setMatches] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    fetchTomorrowMatches();
+  }, []);
+
+  const fetchTomorrowMatches = async () => {
+    try {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      const matchesData = await fetchMatchesByDate(tomorrow);
+      setMatches(matchesData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      setIsError(true)
+    }
+  };
+
+  const renderMatchItem = ({ item }) => {
+    const competition = item.competition;
+    const competitionName = competition.name;
+    const competitionCrest = competition.area.ensignUrl;
+   
+     console.log(competitionCrest);
+
+     return (
+      <TouchableOpacity onPress={() => navigateToMatchDetails(item)}>
+        <View style={styles.matchContainer}>
+          <View>
+          <Image
+  source={{ uri: competitionCrest }}
+  style={styles.competitionCrest}
+  onError={(error) => console.log('Image loading error:', error)}
+/>
+            <Text style={styles.competitionName}>{competitionName}</Text>
+            <Text style={styles.matchText}>
+              {item.homeTeam.name} vs {item.awayTeam.name}
+            </Text>
+            {item.status === "FINISHED" ? (
+              <Text style={styles.statusText}>FT</Text>
+            ) : item.status === "SCHEDULED" ? (
+              <Text style={styles.statusText}>
+                {new Date(item.utcDate).toLocaleTimeString()}
+              </Text>
+            ) : (
+              <Text style={styles.statusText}>{item.status}</Text>
+            )}
+          </View>
+          {item.status === "FINISHED" && (
+            <View style={styles.scoreContainer}>
+              <Text style={styles.scoreText}>
+                {item.score.fullTime.homeTeam} - {item.score.fullTime.awayTeam}
+              </Text>
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <View>
+      {isLoading ? (
+        <CustomLoader/>
+      ) : (       
+        <FlatList
+          data={matches}
+          renderItem={renderMatchItem}
+          keyExtractor={item => item.id.toString()}
+        />
+       
+        )}
+        </View>
+   
+  );
+}
+
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  matchContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  competitionCrest: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+  },
+  competitionName: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  matchText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  statusText: {
+    marginBottom: 4,
+  },
+  scoreText: {
+    fontWeight: 'bold',
+    color: 'tomato',
+  },
+  scoreContainer: {
+    borderRadius: 6,
+    padding: 5,
+  },
+});
+
+last 6(numberOfMatches) days
+head 2 head
+3 draws 3
+2 losses 4
+3 wins  3
+
+competiton name and logo,
+matchday
+
+scores at full time,half time and extraTime if present 
+
+
+details Object {
+  "head2head": Object {
+    "awayTeam": Object {
+      "draws": 2,
+      "id": 1766,
+      "losses": 2,
+      "name": "CA Mineiro",
+      "wins": 2,
+    },
+    "homeTeam": Object {
+      "draws": 2,
+      "id": 4250,
+      "losses": 2,
+      "name": "Goiás EC",
+      "wins": 2,
+    },
+    "numberOfMatches": 6,
+    "totalGoals": 11,
+  },
+  "match": Object {
+    "awayTeam": Object {
+      "id": 1766,
+      "name": "CA Mineiro",
+    },
+    "competition": Object {
+      "area": Object {
+        "code": "BRA",
+        "ensignUrl": "https://crests.football-data.org/764.svg",
+        "name": "Brazil",
+      },
+      "id": 2013,
+      "name": "Campeonato Brasileiro Série A",
+    },
+    "group": null,
+    "homeTeam": Object {
+      "id": 4250,
+      "name": "Goiás EC",
+    },
+    "id": 432302,
+    "lastUpdated": "2023-07-08T00:20:09Z",
+    "matchday": 15,
+    "odds": Object {
+      "msg": "Activate Odds-Package in User-Panel to retrieve odds.",
+    },
+    "referees": Array [],
+    "score": Object {
+      "duration": "REGULAR",
+      "extraTime": Object {
+        "awayTeam": null,
+        "homeTeam": null,
+      },
+      "fullTime": Object {
+        "awayTeam": null,
+        "homeTeam": null,
+      },
+      "halfTime": Object {
+        "awayTeam": null,
+        "homeTeam": null,
+      },
+      "penalties": Object {
+        "awayTeam": null,
+        "homeTeam": null,
+      },
+      "winner": null,
+    },
+    "season": Object {
+      "currentMatchday": 15,
+      "endDate": "2023-12-03",
+      "id": 1557,
+      "startDate": "2023-04-15",
+      "winner": null,
+    },
+    "stage": "REGULAR_SEASON",
+    "status": "SCHEDULED",
+    "utcDate": "2023-07-17T23:00:00Z",
+    "venue": null,
+  },
+}
