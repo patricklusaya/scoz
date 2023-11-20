@@ -5,6 +5,10 @@ import { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import NetworkErrorCard from "./cards/NetworkErrorCard";
 export default function OtherMatches({screenStyle, cardStyle}) {
+  // Get the current date
+  const today = new Date();
+  // Format the date to a string in the format "YYYY-MM-DD"
+  const formattedDate = today.toISOString().split('T')[0];
   const [selectedDate, setSelectedDate] = useState(null);
   const [fixtures, setFixtures] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -15,6 +19,8 @@ export default function OtherMatches({screenStyle, cardStyle}) {
 
   const handleDateSelect = (date) => {
     setSelectedDate(date.dateString);
+    const trh = date.dateString
+    console.log('my date', trh);
     fetchFixtures(date.dateString);
   };
 
@@ -40,7 +46,7 @@ export default function OtherMatches({screenStyle, cardStyle}) {
   };
 
   return (
-  <ScrollView contentContainerStyle={[styles.container, {backgroundColor:cardBackgroundColor}]}>
+  <ScrollView contentContainerStyle={[styles.container, {backgroundColor:backgroundColor}]}>
       <Calendar onDayPress={handleDateSelect} style={styles.calendarStyles} />
       {selectedDate && (
         <View>

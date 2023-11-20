@@ -20,19 +20,28 @@ import PrimeiraLiga from "./components/competitions/primeiraliga/PremeiraLiga";
 import Efl from "./components/competitions/efl/Efl";
 import OtherMatches from "./components/OtherMatches";
 import Fixtures from "./components/Fixtures";
-import { StatusBar } from "react-native";
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerActions } from '@react-navigation/native';
+
 import {
   DarkModeContext,
   DarkModeProvider,
 } from "./components/context/DarkModeContext";
 import { useContext } from "react";
 import { MatchDetails } from "./components/MatchDetails";
+import Splash from "./components/playzone/Splash";
+import SignUp from "./components/playzone/signup";
+import SelectZone from "./components/playzone/selectzone";
+import { Quiz } from "./components/playzone/scozquiz/Quiz";
+import Scozquiz from "./components/playzone/scozquiz/Scozquiz";
+
 
 
 
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const BottomTabs = () => {
   const { isDarkModeEnabled } = useContext(DarkModeContext);
@@ -44,7 +53,7 @@ const BottomTabs = () => {
         iconColor: "#FFFFFF", // Icon color for dark mode
       }
     : {
-        backgroundColor: "#F8F8F8",
+        backgroundColor: "#e6e1e1",
         color: "black", // Text color for light mode
         iconColor: "black", // Icon color for light mode
       };
@@ -108,6 +117,9 @@ const BottomTabs = () => {
           } else if (route.name === "Settings") {
             iconName = focused ? "ios-list" : "ios-list";
           }
+          else if (route.name === "Play Zone") {
+            iconName = focused ? "game-controller" : "game-controller-outline";
+          }
 
           return <Ionicons name={iconName} size={24} color="tomato" />;
         },
@@ -161,7 +173,9 @@ const BottomTabs = () => {
               color="tomato"
             />
           ),
-          headerStyle: screenStyle, // Apply the screenStyle to headerStyle
+          headerStyle: {
+            backgroundColor: cardStyle.cardBackgroundColor,
+          },
           headerTitleStyle: { color: screenStyle.color },
         }}
       >
@@ -173,15 +187,27 @@ const BottomTabs = () => {
           />
         )}
       </BottomTab.Screen>
-
+      <BottomTab.Screen
+        name="Play Zone"
+        options={{
+          headerStyle: {
+            backgroundColor: cardStyle.cardBackgroundColor,
+          }, // Apply the screenStyle to headerStyle
+          headerTitleStyle: { color: screenStyle.color },
+        }}
+        component={Splash}
+      />
       <BottomTab.Screen
         name="Settings"
         options={{
-          headerStyle: screenStyle, // Apply the screenStyle to headerStyle
+          headerStyle: {
+            backgroundColor: cardStyle.cardBackgroundColor,
+          }, // Apply the screenStyle to headerStyle
           headerTitleStyle: { color: screenStyle.color },
         }}
         component={SettingsScreen}
       />
+      
     </BottomTab.Navigator>
   );
 };
@@ -228,7 +254,20 @@ export const AppContent = () => {
         <Stack.Screen name="Match" component={EuropeTopScorers} />
         <Stack.Screen name="Assists" component={EuropeTopAssistsProviders} />
         <Stack.Screen name="Match Details" component={MatchDetails} />
-
+        <Stack.Screen name="Sign Up" component={SignUp} options={{ title: 'Create An Account' }} />
+        <Stack.Screen name="Select Zone" component={SelectZone} options={{ title: 'Choose Zone' }} />
+        {/* <Drawer.Navigator>
+        <Drawer.Screen name="Scoz Quiz" component={Scozquiz} options={{ title: '' ,headerShown: false,  headerStyle: {
+            borderBottomWidth: 0, // Remove the bottom border
+          },}} />
+    
+      </Drawer.Navigator> */}
+        <Stack.Screen name="Scoz Quiz" component={Scozquiz} options={{ title: '' ,headerShown: false,  headerStyle: {
+            borderBottomWidth: 0, // Remove the bottom border
+          },}} />
+           <Stack.Screen name="Quiz" component={Quiz} options={{ title: '' ,headerShown: false,  headerStyle: {
+            borderBottomWidth: 0, // Remove the bottom border
+          },}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

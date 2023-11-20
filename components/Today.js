@@ -88,7 +88,7 @@ function Today({cardStyle, screenStyle}) {
       <View style={[styles.container, {backgroundColor:backgroundColor}]} >
       
           <TouchableOpacity onPress={() => navigateToMatchDetails(item)}>
-            <View style={[styles.matchContainer, {backgroundColor:cardBackgroundColor }]}>
+            <View style={[styles.matchContainer]}>
               <View>
                 <SvgUri
                   uri={competitionCrest}
@@ -137,7 +137,7 @@ function Today({cardStyle, screenStyle}) {
   return (
   
     <ScrollView
-    contentContainerStyle={[styles.container , {backgroundColor:cardBackgroundColor }]}
+    contentContainerStyle={[styles.container , {backgroundColor:backgroundColor }]}
     refreshControl={
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+ 
 } from "react-native";
 import { fetchTopScorersAcrossLeagues } from "../services/matchesServices";
 import EuropeTopScorers from "../components/EuropeTopScorers";
@@ -60,7 +61,9 @@ export default function Stats({cardStyle, screenStyle,popularLeagueCardStyle}) {
   };
 
   return (
+
   <View style={[styles.container, {backgroundColor:backgroundColor}]}>
+     
         <View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <TouchableOpacity onPress={handleCardPress}>

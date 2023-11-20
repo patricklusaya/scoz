@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "753597051531",
+    "project_id": "scoz-7a5a9",
+    "storage_bucket": "scoz-7a5a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753597051531:android:ee2234d76b0e19efb21a8e",
+        "android_client_info": {
+          "package_name": "com.company.scoz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753597051531-pmhp8kqm65di202j2g704ktigfnqo8cn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.scoz",
+            "certificate_hash": "5fed89c3e36aaa3027fde690460449840b79a889"
+          }
+        },
+        {
+          "client_id": "753597051531-03tbto22q409lh97fpetpf9acjpcmkb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv2h-PgIS4kGThoQvahGwNJFGVMngew7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753597051531-03tbto22q409lh97fpetpf9acjpcmkb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

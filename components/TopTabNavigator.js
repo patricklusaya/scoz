@@ -10,68 +10,58 @@ import { View } from "react-native";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 
-const TopTabNavigator = ({cardStyle, screenStyle}) => {
-
-  //const initialization
-  const { backgroundColor, color, iconColor } = screenStyle;
-  const { cardBackgroundColor, cardColor, cardiconColor } = cardStyle;
-
+const TopTabNavigator = ({ cardStyle, screenStyle }) => {
   return (
-   
     <TopTab.Navigator
- initialRouteName="Today"
-    tabBarOptions={{
-      indicatorStyle: {
-        backgroundColor: "tomato",
-        height: 50,
-        borderRadius: 50,
-      },
-      labelStyle: {
-        fontSize: 12,
-        color: "black",
-      },
-      style: {
-        marginTop: 50,
-        marginRight: 40,
-        marginLeft: 40,
-        backgroundColor: "#cccccc",
-        // backgroundColor: cardStyle.cardBackgroundColor,
-      
-        borderRadius: 50,
-        borderBottomColor: "transparent",
-      },
-      activeTintColor: "tomato",
-      inactiveTintColor: "grey",
-      pressColor: "#cccccc",
-      pressOpacity: 0.8,
-      scrollEnabled: true,
-    }}
-  >
-     <TopTab.Screen
-        name="Other"
-       
-        
-      >
-          {(props) => (
-    <OtherMatches {...props} screenStyle={screenStyle} cardStyle={cardStyle}  />
-  ) }
-</TopTab.Screen>
-      <TopTab.Screen name="Today" 
-      
-    
+      initialRouteName="Today"
+      tabBarOptions={{
+        indicatorStyle: {
+          backgroundColor: "tomato",
+          height: 50,
+          borderRadius: 50,
+        },
+        labelStyle: {
+          fontSize: 12,
+          color: "black",
+        },
+        style: {
+          marginTop: 35,
+          marginRight: 40,
+          marginLeft: 40,
+          // backgroundColor: "#cccccc",
+          backgroundColor:"#e6e1e1",
+
+          marginBottom: 10,
+          borderRadius: 50,
+          borderBottomColor: "transparent",
+        },
+        activeTintColor: "tomato",
+        inactiveTintColor: "grey",
+        pressColor: "#cccccc",
+        pressOpacity: 0.8,
+        scrollEnabled: true,
+      }}
     >
-     {(props) => (
-    <Today{...props} screenStyle={screenStyle} cardStyle={cardStyle}  />
-  )}
-</TopTab.Screen>
-      <TopTab.Screen name="Tommorow" >
-      {(props) => (
-    <Tomorrow {...props} screenStyle={screenStyle} cardStyle={cardStyle}  />
-  )}
-</TopTab.Screen>
-     
+      <TopTab.Screen name="Other">
+        {(props) => (
+          <OtherMatches
+            {...props}
+            screenStyle={screenStyle}
+            cardStyle={cardStyle}
+          />
+        )}
+      </TopTab.Screen>
+      <TopTab.Screen name="Today">
+        {(props) => (
+          <Today {...props} screenStyle={screenStyle} cardStyle={cardStyle} />
+        )}
+      </TopTab.Screen>
+      <TopTab.Screen name="Tomorrow">
+        {(props) => (
+          <Tomorrow {...props} screenStyle={screenStyle} cardStyle={cardStyle} />
+        )}
+      </TopTab.Screen>
     </TopTab.Navigator>
- 
   );
 };
 const styles = StyleSheet.create({

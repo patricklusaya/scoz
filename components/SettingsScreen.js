@@ -64,7 +64,7 @@ const SettingsScreen = () => {
         iconColor: 'white', // Icon color for dark mode
       }
     : {
-        backgroundColor: '#F8F8F8',
+        backgroundColor: '#e6e1e1',
         color: 'black', // Text color for light mode
         iconColor: 'black', // Icon color for light mode
       };

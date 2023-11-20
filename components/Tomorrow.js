@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import CustomLoader from './loaders/CustomLoader';
 import { RefreshControl } from 'react-native';
 import NoMatchCard from './cards/NoMatchCard';
+import { SvgUri } from "react-native-svg";
 import NetworkErrorCard from './cards/NetworkErrorCard';
 export default function Tomorrow({screenStyle, cardStyle}) {
   const [matches, setMatches] = useState([]);
@@ -16,6 +17,7 @@ export default function Tomorrow({screenStyle, cardStyle}) {
     //constants initialization
     const { backgroundColor, color, iconColor } = screenStyle;
     const { cardBackgroundColor, cardColor, cardiconColor } = cardStyle
+    console.log(backgroundColor);
 
   useEffect(() => {
     fetchTomorrowMatches();
@@ -66,15 +68,28 @@ export default function Tomorrow({screenStyle, cardStyle}) {
       <View style={[styles.container, {backgroundColor:backgroundColor}]} >
       
           <TouchableOpacity onPress={() => navigateToMatchDetails(item)}>
-            <View style={[styles.matchContainer, {backgroundColor:cardBackgroundColor }]}>
+            <View style={[styles.matchContainer, {backgroundColor:backgroundColor }]}>
               <View>
-                <SvgUri
+                
+                {/* <SvgUri
                   uri={competitionCrest}
                   height={20}
                   width={20}
                   style={styles.competitionCrest}
                 />
-                <Text style={[styles.competitionName, {color:color}]}>{competitionName}</Text>
+                <Text style={[styles.competitionName, {color:color}]}>{competitionName}</Text> */}
+                 <View style={styles.gameContainer}>
+      <View style={styles.imageContainer}>
+        <SvgUri
+          uri={competitionCrest}
+          height={20}
+          width={20}
+          style={styles.circularImage}
+        />
+      </View>
+      <Text style={styles.competitionName}>{competitionName}</Text>
+    </View>
+    <View style={styles.matchDetails}>
                 <Text style={[styles.matchText, {color:color}]}>
                   {item.homeTeam.name} vs {item.awayTeam.name}
                 </Text>
@@ -95,7 +110,9 @@ export default function Tomorrow({screenStyle, cardStyle}) {
                     {item.score.fullTime.awayTeam}
                   </Text>
                 </View>
+                
               )}
+              </View>
             </View>
           </TouchableOpacity>
    
@@ -106,7 +123,7 @@ export default function Tomorrow({screenStyle, cardStyle}) {
   return (
   
     <ScrollView
-    contentContainerStyle={[styles.container , {backgroundColor:cardBackgroundColor }]}
+    contentContainerStyle={[styles.container , {backgroundColor:backgroundColor }]}
     refreshControl={
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }
@@ -155,24 +172,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  gameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   matchContainer: {
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    borderBottomColor: "#ccc",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
-  competitionCrest: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
+  imageContainer: {
+  
+    overflow: 'hidden', // Clip the image to the circular shape
+    marginRight: 5, // Add some spacing between the image and the competition name
+  
+    
+  
+   
   },
+ 
   competitionName: {
     fontSize: 12,
     fontWeight: 'bold',
-    marginBottom: 4,
+    color: '#333',
   },
   matchText: {
     fontSize: 16,
@@ -190,6 +216,9 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 5,
   },
+  matchDetails:{
+    marginLeft:25
+  }
 });
 
 
